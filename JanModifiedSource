@@ -468,49 +468,7 @@ library.createButton = function(option, parent)
 		SliceCenter = Rect.new(2, 2, 62, 62),
 		Parent = option.title
 	})
-            local searchLabel = library:Create('ImageLabel', {
-            Position = UDim2.new(0, titleTextSize.X + 10, 0.5, -8),
-            Size = UDim2.new(0, 16, 0, 16),
-            BackgroundTransparency = 1,
-            Image = 'rbxasset://textures/ui/Settings/ShareGame/icons.png',
-            ImageRectSize = Vector2.new(16, 16),
-            ImageRectOffset = Vector2.new(6, 106),
-            ClipsDescendants = true,
-            Parent = self.titleLabel
-        });
-
-        local searchBox = library:Create('TextBox', {
-            BackgroundTransparency = 1,
-            Position = UDim2.fromOffset(searchLabel.AbsolutePosition.X-80, 5),
-            Size = UDim2.fromOffset(50, 15),
-            TextColor3 = Color3.fromRGB(255, 255, 255),
-            TextXAlignment = Enum.TextXAlignment.Left,
-            Parent = self.titleLabel,
-            Text = '',
-            PlaceholderText = 'Type something to search...',
-            Visible = false
-        });
-
-        local searchContainer = library:Create('ScrollingFrame', {
-            BackgroundTransparency = 1,
-            Visible = false,
-            Size = UDim2.fromScale(1, 1),
-            AutomaticCanvasSize = Enum.AutomaticSize.Y,
-            Parent = library.columnHolder,
-            BorderSizePixel = 0,
-            ScrollBarImageColor3 = Color3.fromRGB(100, 100, 100),
-            ScrollBarThickness = 6,
-            CanvasSize = UDim2.new(),
-            ScrollingDirection = Enum.ScrollingDirection.Y,
-            VerticalScrollBarInset = Enum.ScrollBarInset.Always,
-            TopImage = 'rbxasset://textures/ui/Scroll/scroll-middle.png',
-            BottomImage = 'rbxasset://textures/ui/Scroll/scroll-middle.png',
-        });
-
-        library:Create('UIListLayout', {
-            Parent = searchContainer
-        })
-
+            
 	library:Create("ImageLabel", {
 		Size = UDim2.new(1, -2, 1, -2),
 		Position = UDim2.new(0, 1, 0, 1),
