@@ -6,7 +6,8 @@ getgenv().tweenService = game:GetService"TweenService"
 if getgenv().library then
 	getgenv().library:Unload()
 end
-local library = {design = getgenv().design == "kali" and "kali", tabs = {}, draggable = true, flags = {}, title = "awakenkn-hub", open = false, mousestate = inputService.MouseIconEnabled,popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = "awakenkn-hubv3", fileext = ".json"}
+
+local library = {design = getgenv().design == "kali" and "kali", tabs = {}, draggable = true, flags = {}, title = "Jester-Hub", open = false, mousestate = inputService.MouseIconEnabled,popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = "Jester-HubAlpha", fileext = ".json"}
 if getgenv().scripttitle then
     library.title = getgenv().scripttitle
 end
@@ -14,6 +15,7 @@ if getgenv().FolderName then
     library.foldername = getgenv().FolderName
 end
 getgenv().library = library
+
 local dragging, dragInput, dragStart, startPos, dragObject
 
 local blacklistedKeys = { 
@@ -167,7 +169,7 @@ library.createLabel = function(option, parent)
 		Position = UDim2.new(0, 6, 0, 0),
 		Size = UDim2.new(1, -12, 0, 24),
 		BackgroundTransparency = 1,
-		TextSize = 18,
+		TextSize = 15,
 		Font = Enum.Font.Code,
 		TextColor3 = Color3.new(1, 1, 1),
 		TextXAlignment = Enum.TextXAlignment.Left,
@@ -184,6 +186,7 @@ library.createLabel = function(option, parent)
 	end})
 	option.Text = option.text
 end
+
 library.createDivider = function(option, parent)
 	option.main = library:Create("Frame", {
 		LayoutOrder = option.position,
@@ -465,7 +468,7 @@ library.createButton = function(option, parent)
 		SliceCenter = Rect.new(2, 2, 62, 62),
 		Parent = option.title
 	})
-            
+
 	library:Create("ImageLabel", {
 		Size = UDim2.new(1, -2, 1, -2),
 		Position = UDim2.new(0, 1, 0, 1),
@@ -576,7 +579,6 @@ library.createBind = function(option, parent)
 			bindinput.TextColor3 = library.flags["Menu Accent Color"]
 		end
 	end)
-
 
 	library:AddConnection(inputService.InputBegan, function(input)
 		if inputService:GetFocusedTextBox() then return end
