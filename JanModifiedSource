@@ -167,7 +167,7 @@ library.createLabel = function(option, parent)
 		Position = UDim2.new(0, 6, 0, 0),
 		Size = UDim2.new(1, -12, 0, 24),
 		BackgroundTransparency = 1,
-		TextSize = 15,
+		TextSize = 18,
 		Font = Enum.Font.Code,
 		TextColor3 = Color3.new(1, 1, 1),
 		TextXAlignment = Enum.TextXAlignment.Left,
@@ -184,7 +184,6 @@ library.createLabel = function(option, parent)
 	end})
 	option.Text = option.text
 end
- local titleTextSize = TextService:GetTextSize(self.titleLabel.Text, 18, Enum.Font.Code, Vector2.new(1000, 0));
 library.createDivider = function(option, parent)
 	option.main = library:Create("Frame", {
 		LayoutOrder = option.position,
