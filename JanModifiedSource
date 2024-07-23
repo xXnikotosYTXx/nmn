@@ -6,10 +6,7 @@ getgenv().tweenService = game:GetService"TweenService"
 if getgenv().library then
 	getgenv().library:Unload()
 end
-
-local library = {design = getgenv().design == "kali" and "kali", tabs = {}, draggable = true, flags = {}, title = "Jester-Hub", open = false, mousestate = inputService.MouseIconEnabled,popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = "Jester-Hub Alpha", fileext = ".json"}
-
-
+local library = {design = getgenv().design == "kali" and "kali", tabs = {}, draggable = true, flags = {}, title = "awakenkn-hub", open = false, mousestate = inputService.MouseIconEnabled,popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = "awakenkn-hubv3", fileext = ".json"}
 if getgenv().scripttitle then
     library.title = getgenv().scripttitle
 end
@@ -17,7 +14,6 @@ if getgenv().FolderName then
     library.foldername = getgenv().FolderName
 end
 getgenv().library = library
-
 local dragging, dragInput, dragStart, startPos, dragObject
 
 local blacklistedKeys = { 
