@@ -621,6 +621,7 @@ library.createBind = function(option, parent)
 		end
 	end)
 
+
 	library:AddConnection(inputService.InputBegan, function(input)
 		if inputService:GetFocusedTextBox() then return end
 		if binding then
