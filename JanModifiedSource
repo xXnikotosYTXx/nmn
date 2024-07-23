@@ -186,7 +186,9 @@ library.createLabel = function(option, parent)
 	end})
 	option.Text = option.text
 end
- local searchLabel = library:Create('ImageLabel', {
+ local titleTextSize = TextService:GetTextSize(self.titleLabel.Text, 18, Enum.Font.Code, Vector2.new(1000, 0));
+
+        local searchLabel = library:Create('ImageLabel', {
             Position = UDim2.new(0, titleTextSize.X + 10, 0.5, -8),
             Size = UDim2.new(0, 16, 0, 16),
             BackgroundTransparency = 1,
@@ -228,6 +230,109 @@ end
         library:Create('UIListLayout', {
             Parent = searchContainer
         })
+
+        local allFoundResults = {};
+        local modifiedNames = {};
+
+        local function clearFoundResult()
+            for _, option in next, allFoundResults do
+                option.main.Parent = option.originalParent;
+            end;
+
+            for _, option in next, modifiedNames do
+                option.title.Text = option.text;
+                option.main.Parent = option.originalParent;
+            end;
+
+            table.clear(allFoundResults);
+            table.clear(modifiedNames);
+        end;
+
+        local sFind, sLower = string.find, string.lower;
+
+        library.unloadMaid:GiveTask(searchBox:GetPropertyChangedSignal('Text'):Connect(function()
+            local text = string.lower(searchBox.Text):gsub('%s', '');
+
+            for _, v in next, library.options do
+                if (not v.originalParent) then
+                    v.originalParent = v.main.Parent;
+                end;
+            end;
+
+            clearFoundResult();
+
+            for _, v in next, library.currentTab.columns do
+                v.main.Visible = text == '' and true or false;
+            end;
+
+            if (text == '') then return; end;
+            local matchedResults = false;
+
+            for _, v in next, library.options do
+                local main = v.main;
+
+                if (v.text == 'Enable' or v.parentFlag) then
+                    if (v.type == 'toggle' or v.type == 'bind') then
+                        local parentName = v.parentFlag and 'Bind' or v.section.title;
+                        v.title.Text = string.format('%s [%s]', v.text, parentName);
+
+                        table.insert(modifiedNames, v);
+                    end;
+                end;
+
+                if (sFind(sLower(v.text), text) or sFind(sLower(v.flag), text)) then
+                    matchedResults = true;
+                    main.Parent = searchContainer;
+                    table.insert(allFoundResults, v);
+                else
+                    main.Parent = v.originalParent;
+                end;
+            end;
+
+            searchContainer.Visible = matchedResults;
+        end));
+
+        library.unloadMaid:GiveTask(searchLabel.InputBegan:Connect(function(inputObject)
+            if(inputObject.UserInputType ~= Enum.UserInputType.MouseButton1) then return end;
+            searchBox.Visible = true;
+            searchBox:CaptureFocus();
+        end));
+
+        library.unloadMaid:GiveTask(searchBox.FocusLost:Connect(function()
+            if (searchBox.Text:gsub('%s', '') ~= '') then return end;
+            searchBox.Visible = false;
+        end));
+
+
+        local tweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out);
+
+        function self:selectTab(tab)
+            if self.currentTab == tab then return end
+            if library.popup then library.popup:Close() end
+            clearFoundResult();
+            searchBox.Visible = false;
+            searchBox.Text = '';
+
+            if self.currentTab then
+                self.currentTab.button.TextColor3 = Color3.fromRGB(255, 255, 255)
+                for _, column in next, self.currentTab.columns do
+                    column.main.Parent = nil;
+                    column.main.Visible = true;
+                end
+            end
+            self.main.Size = UDim2.new(0, 16 + ((#tab.columns < 2 and 2 or #tab.columns) * 239), 0, 600)
+            self.currentTab = tab
+            tab.button.TextColor3 = library.flags.menuAccentColor;
+
+            TweenService:Create(self.tabHighlight, tweenInfo, {
+                Position = UDim2.new(0, tab.button.Position.X.Offset, 0, 50),
+                Size = UDim2.new(0, tab.button.AbsoluteSize.X, 0, -1)
+            }):Play();
+
+            for _, column in next, tab.columns do
+                column.main.Parent = self.columnHolder
+            end
+        end
 library.createDivider = function(option, parent)
 	option.main = library:Create("Frame", {
 		LayoutOrder = option.position,
